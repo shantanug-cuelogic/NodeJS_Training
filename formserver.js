@@ -13,7 +13,7 @@ http.createServer(function(req,res){
         req.on("data",function(chunk){
             body+=chunk;
         });
-        ;
+        
 
         req.on("end",function() {
             res.writeHead(200,{"Content-Type" : "text/html"});
