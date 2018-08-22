@@ -19,7 +19,7 @@ var employeeSchema = new Schema({
     age: { type: Number, min: 18, max: 65 },   
 });
 
-employeeSchema.index({"empId": 1});
+//employeeSchema.index({"empId": 1});
 
 var empData = mongoose.model('empData', employeeSchema);
 
@@ -63,19 +63,31 @@ var deleteEmployee = (req,res,next) => {
 
 var getAllEmployee = (req,res,next) => {
     empData.find({},function(err,employees){
-     res.send(employees);
+     
+    
+    
+    res.send(employees);
+    res.end();
+
+
     });
 }
 
 var showUpdatePage = (req,res,next) => {
     res.sendFile(path.join(__dirname+'/public'+'/update.html'));
+   
 
 
 }
 showEmployeeDetails = (req,res,next) => {
     
-    empData.findOne({empId:req.body.empid},function(err,employee){
-       var response = `<!DOCTYPE html>
+    empData.findOne({"empId":req.body.empid},function(err,employee){
+       
+        if(err) {
+            throw err;
+        }
+       
+        let response = `<!DOCTYPE html>
        <html lang="en">
        <head>
            <meta charset="UTF-8">
@@ -147,6 +159,10 @@ var updateEmployee = (req,res,next) => {
     })
 }
 
+var showUpdatePages = (req,res,next) => {
+    res.redirect('/updateEmployee');
+}
+
 app.get('/',createData);
 app.post('/',createData);
 app.get('/deleteEmployee',showDeletePage);
@@ -155,7 +171,7 @@ app.get('/getAllEmployee', getAllEmployee);
 app.get('/updateEmployee',showUpdatePage);
 app.post('/updateEmployeeOne',showEmployeeDetails);
 app.post('/updateEmployeeTwo',updateEmployee);
-app.get('/updateEmployeeTwo',showUpdatePage);
+app.get('/updateEmployeeTwo',showUpdatePages);
 
 
 
