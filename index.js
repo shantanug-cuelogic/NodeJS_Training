@@ -19,8 +19,10 @@ var employeeSchema = new Schema({
     age: { type: Number, min: 18, max: 65 },   
 });
 
+employeeSchema.index({"empId": 1});
 
 var empData = mongoose.model('empData', employeeSchema);
+
 
 var createData = (req,res,next) =>{
         
@@ -31,8 +33,16 @@ var createData = (req,res,next) =>{
         age: req.body.age, 
     });
     
-    employee.save();
-    res.redirect('/');
+    employee.save(function(err,data) { 
+
+        if(err) {
+            throw err;
+        }
+
+        res.send("Inserted" +data);
+
+    });
+    
   
     
 }
@@ -137,7 +147,7 @@ var updateEmployee = (req,res,next) => {
     })
 }
 
-
+app.get('/',createData);
 app.post('/',createData);
 app.get('/deleteEmployee',showDeletePage);
 app.post('/deleteEmployee',deleteEmployee);
