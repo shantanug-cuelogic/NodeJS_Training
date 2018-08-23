@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signUpRouter = require('./routes/signUp');
 var signInRouter = require('./routes/signIn');
+var homeRouter = require('./routes/home');
+
 
 require('dotenv').config();
 
@@ -29,18 +31,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signup', signUpRouter);
 app.use('/signin', signInRouter);
-app.use('/verify', function (req, res, next) {
- // var token = localStorage.getItem('token');
-  jwt.verify(process.env.TOKEN, process.env.SECRETKEY, (err, decoded) => {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log(decoded.userId);
-    }
-  });
-});
-
+app.use('/home',homeRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
