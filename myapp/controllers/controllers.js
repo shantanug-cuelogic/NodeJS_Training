@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var userModel = require('../models/user');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var request = require('request');
+
 require('dotenv').config();
 
 
@@ -36,11 +38,13 @@ module.exports = {
                                     storeToken(token);
                                 });
 
-                                $.ajax({
-                                    url: "http://localhost:3000/home",
-                                    method: "GET"
 
-                                })
+                                request.get("http://localhost:3000/home");
+                                // $.ajax({
+                                //     url: "http://localhost:3000/home",
+                                //     method: "GET"
+
+                                // })
                             }
 
                         }
