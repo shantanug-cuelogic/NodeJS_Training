@@ -1,17 +1,26 @@
 extends layout
 
 block content
- div(class="container ")
-  div(class="col-sm-4 col-sm-offset-4 well")  
-    form 
-        div(class="form-group") 
-            label(for="email") Email address:
-            input(type="email" class="form-control" id="email")
-                
-        div(class="form-group")
-            label(for="pwd") Password:
-            input(type="password" class="form-control" id="pwd")
+  
+        div(class="container ")
+        div(class="col-sm-4 col-sm-offset-4 well")  
+            form 
+                div(class="form-group") 
+                    label(for="email") Email address:
+                    input(type="email" class="form-control" id="email")
+
+                div(class="form-group") 
+                    label(for="fname") First Name:
+                    input(type="text" class="form-control" id="fname")
+
+                div(class="form-group") 
+                    label(for="lname") Last Name:
+                    input(type="text" class="form-control" id="lname")
                         
-        button(type="submit" class="btn btn-success") Submit
-             
-                        
+                div(class="form-group")
+                    label(for="pwd") Password:
+                    input(type="password" class="form-control" id="pwd")
+                                
+                button(class="btn btn-success" onclick="signUp(event)") Submit
+           
+                            
