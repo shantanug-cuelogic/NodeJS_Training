@@ -10,6 +10,7 @@ module.exports = (app) => {
     app.use('/updateuser', controllers.userUpdate);
     app.use('/updateUserinProgress',controllers.updateUserinDb);
     app.use('/alluser',controllers.allUser);
+    app.use('/searchuser',controllers.searchUser)
     //app.use('/', controllers.signUp );
 
 

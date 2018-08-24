@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 var userModel = require('../models/user');
+var userActivityModel = require('../models/userActivity');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var request = require('request');
+var moment = require('moment');
 
 
 require('dotenv').config();
@@ -33,12 +35,41 @@ module.exports = {
                         if (passwordAuthorization) {
                             if (req.body.email === result.email) {
                                 console.log("Authentication Success");
+                                var userActivityHandler = false;
+                                userActivityModel.find({},(err,queryResult)=> {
+                                  
+                                    queryResult.forEach(element => {
+                                        if(req.body.email === element.userName) {
+                                            userActivityHandler = true;
+                                            
+                                        }
+                                    });
+                                });
+
+                               if(userActivityHandler) {
+                                userActivityModel.findOneAndUpdate({userName:req.body.email},{timeStamp: moment().format()});   
+                               }
+                                else if(!userActivityHandler) {
+                                    var userActivity = new userActivityModel({
+                                        userId: req.body._id,
+                                        userName:req.body.email,
+                                        timeStamp: moment().format()
+                                    });
+    
+                                    userActivity.save();
+                                    
+                                }
+                                
+                                
+
 
                                 jwt.sign({ userId: result._id }, process.env.SECRETKEY, { expiresIn: '1h' }, (err, token) => {
                                     storeToken(token);
                                     res.json({ success: true, isAdmin: result.isAdmin });
                                 });
                                 request.post("http://localhost:3000/home");
+                               
+                               
                             }
                         }
                         else {
@@ -195,7 +226,35 @@ module.exports = {
             res.render('allUser');
         }
         else if (req.method === 'POST') {
-           
+           userModel.find({},(err,usersData) => {
+               if(err) {
+                   console.log(err)
+                   res.json({success:false})
+               }
+               else {
+                   
+                   res.json({success:true,users:usersData});
+               }
+           })
         }
-    }
+    },
+    searchUser: (req, res, next) => {
+        if (req.method === 'GET') {
+            res.render('searchUser');
+            console.log("=====>getserachuser")
+        }
+        else if (req.method === 'POST') {
+            userModel.findOne({email :req.body.email }, (err, result) => {
+
+                if (result === null) {
+
+                    console.log("Authentication Failed DATA NOT FOUND");
+                    res.json(result);
+                }
+                else {
+                    res.json(result);
+                }
+            });
+        }
+    }, 
 }
