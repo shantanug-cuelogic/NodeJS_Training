@@ -12,6 +12,18 @@ signIn = (event) => {
             email : email,
             password: password
         },
+        success: (result) => {
+            console.log("====>",result.success);
+           
+        if(result.success && result.isAdmin){
+            window.location.replace('/homeadmin');
+        }
+        else if(result.success && !result.isAdmin) {
+            window.location.replace('/home');            
+        }
+            
+        } ,
+    
     });
    
 }

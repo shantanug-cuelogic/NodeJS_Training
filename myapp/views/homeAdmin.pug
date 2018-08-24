@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    title= "NodeJs App"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script
+     include ../public/javascripts/signUpRequest.js  
+    script
+     include ../public/javascripts/signInRequest.js  
+    script
+     include ../public/javascripts/fetchUser.js     
+  body
+        | <nav class="navbar navbar-inverse">
+        | <div class="container-fluid">
+        |   <div class="navbar-header">
+        |     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        |       <span class="icon-bar"></span>
+        |       <span class="icon-bar"></span>
+        |       <span class="icon-bar"></span>                        
+        |     </button>
+        |     <a class="navbar-brand" href="#">NodeJS Assignment</a>
+        |   </div>
+        |   <div class="collapse navbar-collapse" id="myNavbar">
+        |     <ul class="nav navbar-nav">
+        |       <li class="active"><a href="/homeAdmin"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
+        |       <li><a href="/updateuser"><span class="glyphicon glyphicon-edit"></span> Update</a></li>
+        |       <li><a href="/alluser"><span class="glyphicon glyphicon-th-list"></span> All User</a></li>
+        |       <li><a href="/usersearch"><span class="glyphicon glyphicon-search"></span> Search User</a></li>
+        |     </ul>
+        |     <ul class="nav navbar-nav navbar-right">
+        |       <li onclick="showUser()"><a href="/userprofile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        |       <li><a href="/signin"><span class="glyphicon glyphicon-log-out    "></span> Logout</a></li>
+        |     </ul>
+        |   </div>
+        | </div>
+        | </nav>
+  

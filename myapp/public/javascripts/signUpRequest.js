@@ -16,6 +16,14 @@ signUp = (event) => {
             lastName: lastName,
             password: password
         },
+   success:(result) => {
+       if(result.success) {
+           window.location.replace('/signin');
+       }
+        else {
+            window.location.replace('/signup');            
+        }
+   }      
     });
    
 }

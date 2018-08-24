@@ -9,7 +9,8 @@ var userSchema = new Schema({
     "firstName": String,
     "lastName": String,
     "email": String,
-    "password": String
+    "password": String,
+    "isAdmin": Boolean
 });
 
 var user = mongoose.model('user', userSchema);
