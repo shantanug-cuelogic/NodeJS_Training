@@ -1,4 +1,9 @@
 userNotLoggedIn = () => {
+    var socket = io.connect('http://localhost:3000/homeadmin');
+    socket.on('welcome', function(data) {
+        alert(data);
+    });
+
 
     $.ajax({
         url: "http://localhost:3000/homeadmin",

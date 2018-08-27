@@ -15,7 +15,7 @@ html
      include ../public/javascripts/updateUser.js 
     script
      include ../public/javascripts/fetchUser.js      
-  body(onload="updateUser()")
+  body(onload="getUser()")
         | <nav class="navbar navbar-inverse">
         | <div class="container-fluid">
         |   <div class="navbar-header">
@@ -55,4 +55,4 @@ html
                     label(for="lname") Last Name:
                     input(type="text" class="form-control" id="lname" )
                                 
-                button(class="btn btn-success" type="button" onclick="editable()") Update
+                button(class="btn btn-success" type="button" onclick="updateUser()") Update

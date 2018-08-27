@@ -1,4 +1,5 @@
-var joi = require('joi');
+import joi from 'joi';
+
 
 const requiredSchema = {
     email: joi.string().email(),

@@ -1,20 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var jwt = require('jsonwebtoken');
-var boom = require('express-boom');
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import boom from 'express-boom';
 
 
-var routes = require('./routes/allRoutes');
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
-// var signUpRouter = require('./routes/signUp');
-// var signInRouter = require('./routes/signIn');
-// var homeRouter = require('./routes/home');
-
+import routes from './routes/routes';
 
 require('dotenv').config();
 
@@ -29,14 +21,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-console.log("===>in app")
 
-app.use('/',routes);
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-// app.use('/signup', signUpRouter);
-// app.use('/signin', signInRouter);
-// app.use('/home',homeRouter)
+app.use('/', routes);
+
+var io = require('socket.io').listen(app.listen(3001));
+
+io.sockets.on('connection', function(socket) {
+  socket.emit('welcome', 'hiiiii from server');
+
+  });
+
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

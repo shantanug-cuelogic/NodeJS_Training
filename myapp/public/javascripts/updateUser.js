@@ -1,5 +1,6 @@
 var userObject ;
-updateUser = () => {
+getUser = () => {
+    
     $.ajax({
         url: "http://localhost:3000/updateUser",
         method: "POST",
@@ -8,7 +9,7 @@ updateUser = () => {
         },
         success: (result) => {
 
-            console.log("updateuser======>", result.firstName);
+          
             document.getElementById('email').innerHTML = result.email;
             document.getElementById('fname').value = result.firstName;
             document.getElementById('lname').value = result.lastName
@@ -19,28 +20,28 @@ updateUser = () => {
     });
 }
 
-editable = () => {
-    console.log("edituser======>", userObject.firstName);
+updateUser = () => {
+    
     $.ajax({
-        url: "http://localhost:3000/updateUserinProgress",
-        method: "POST",
+        url: "http://localhost:3000/storeuser",
+        method:"PUT",
         data: {
-           
+            userToken:localStorage.getItem('token'),
            userId: userObject._id,
            userFirstName : document.getElementById('fname').value,
-           userLastName : document.getElementById('lname').value
-
+           userLastName : document.getElementById('lname').value,
            
+},
+        success: (result) => {
+            if(result.success) {
+                alert("Update");
+
+            }
+            else {
+                alert("Error occured");
+            }
+
         },
-        // success: (result) => {
-
-        //     console.log("updateuser======>", result.firstName);
-        //     document.getElementById('email').innerHTML = result.email;
-        //     document.getElementById('fname').value = result.firstName;
-        //     document.getElementById('lname').value = result.lastName
-          
-
-        // },
 
     });
  

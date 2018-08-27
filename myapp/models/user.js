@@ -1,10 +1,9 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost:27017/NodeJSAppData', { useNewUrlParser: true });
 
-var userSchema = new Schema({
+const userSchema = new Schema({
     _id:mongoose.Schema.Types.ObjectId,
     firstName: String,
     lastName: String,
@@ -13,5 +12,5 @@ var userSchema = new Schema({
     isAdmin: Boolean
 });
 
-var user = mongoose.model('user', userSchema);
+const user = mongoose.model('user', userSchema);
 module.exports = user;

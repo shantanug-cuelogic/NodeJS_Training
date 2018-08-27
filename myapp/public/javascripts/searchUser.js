@@ -1,37 +1,38 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $("#profilecard").hide();
 
-    searchUser =() => {
+    searchUser = () => {
 
         $.ajax({
             url: "http://localhost:3000/searchuser",
             method: "POST",
             data: {
-                email : document.getElementById('email').value,
-                
+                email: document.getElementById('email').value,
+                userToken: localStorage.getItem('token'),
+
             },
             success: (result) => {
-                
-                if(result===null) {
+
+                if (result === null) {
                     alert("User Not Found");
                 }
-    
+
                 else {
                     //document.getElementById('profilecard').style.display="block";
                     $('#profilecard').slideToggle();
-                    document.getElementById('fname').innerHTML= result.firstName +" "+ result.lastName;
-                  
-                    document.getElementById('emailtext').innerHTML= result.email;
-    
-    
+                    document.getElementById('fname').innerHTML = result.firstName + " " + result.lastName;
+
+                    document.getElementById('emailtext').innerHTML = result.email;
+
+
                 }
-            } ,
-        
+            },
+
         });
-       
+
     }
-    
-    
+
+
 
 
 
