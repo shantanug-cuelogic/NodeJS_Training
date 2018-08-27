@@ -4,7 +4,7 @@ updateUser = () => {
         url: "http://localhost:3000/updateUser",
         method: "POST",
         data: {
-
+            userToken:localStorage.getItem('token')
         },
         success: (result) => {
 

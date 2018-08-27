@@ -4,12 +4,14 @@ allUsers = () => {
         url: "http://localhost:3000/alluser",
         method: "POST",
         data: {
-
+            userToken : localStorage.getItem('token'),
         },
         success: (result) => {
 
             console.log("======>", result.users.length);
 
+            if(result.success) {
+                
             for (append = 0; append < result.users.length; append++) {
 
                 var x = document.createElement("TR");
@@ -36,10 +38,12 @@ allUsers = () => {
                 g.appendChild(h);
                 document.getElementById("listtr" + append).appendChild(g);
 
-                
-
-
             }
+        }
+
+        else {
+            alert("Something is Wrong")
+        }
           
         },
 

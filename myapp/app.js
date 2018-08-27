@@ -5,8 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
+var boom = require('express-boom');
 
-var allRoutes = require('./routes/allRoutes');
+
+var routes = require('./routes/allRoutes');
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 // var signUpRouter = require('./routes/signUp');
@@ -17,7 +19,7 @@ var allRoutes = require('./routes/allRoutes');
 require('dotenv').config();
 
 var app = express();
-
+app.use(boom());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -27,8 +29,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+console.log("===>in app")
 
-allRoutes(app);
+app.use('/',routes);
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 // app.use('/signup', signUpRouter);

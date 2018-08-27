@@ -27,7 +27,7 @@ module.exports = {
 
                 if (result === null) {
 
-                    console.log("Authentication Failed DATA NOT FOUND");
+                    res.boom.unauthorized();
                 }
                 else {
 
@@ -35,37 +35,38 @@ module.exports = {
                         if (passwordAuthorization) {
                             if (req.body.email === result.email) {
                                 console.log("Authentication Success");
-                                var userActivityHandler = false;
-                                userActivityModel.find({},(err,queryResult)=> {
-                                  
-                                    queryResult.forEach(element => {
-                                        if(req.body.email === element.userName) {
-                                            userActivityHandler = true;
-                                            
-                                        }
-                                    });
-                                });
 
-                               if(userActivityHandler) {
-                                userActivityModel.findOneAndUpdate({userName:req.body.email},{timeStamp: moment().format()});   
-                               }
-                                else if(!userActivityHandler) {
-                                    var userActivity = new userActivityModel({
-                                        userId: req.body._id,
-                                        userName:req.body.email,
-                                        timeStamp: moment().format()
-                                    });
-    
-                                    userActivity.save();
-                                    
-                                }
-                                
-                                
+
+                                    userActivityModel.findOne({userName:req.body.email},(err,person)=>{
+                                            if(err) {
+                                                console.log("====>err",err) 
+                                            } 
+                                            else if(person===null){
+
+                                                var userActivity = new userActivityModel({
+                                                    userId: result._id,
+                                                    userName:result.email,
+                                                    timeStamp: moment().format('x')
+                                                });
+                
+                                                userActivity.save();                                                
+                                            }
+                                            
+                                            else if(person) {
+                                                
+                                                var currentTime = moment().format('x')
+                                                userActivityModel.findOneAndUpdate({userName:result.email},{timeStamp: currentTime});
+                                            }
+                                    })                                
+
 
 
                                 jwt.sign({ userId: result._id }, process.env.SECRETKEY, { expiresIn: '1h' }, (err, token) => {
                                     storeToken(token);
-                                    res.json({ success: true, isAdmin: result.isAdmin });
+                                    res.json({ success: true, 
+                                        isAdmin: result.isAdmin, 
+                                        authorization: token,
+                                    });
                                 });
                                 request.post("http://localhost:3000/home");
                                
@@ -74,7 +75,7 @@ module.exports = {
                         }
                         else {
                             res.json({ success: false, isAdmin: result.isAdmin });
-                            console.log("Authentication failed");
+                            res.boom.unauthorized();
                         }
                     });
                 }
@@ -92,7 +93,7 @@ module.exports = {
 
         else if (req.method === 'POST') {
             var user = new userModel({
-                //  userId: new mongoose.Types.ObjectId,
+                 _id:new mongoose.Types.ObjectId(),
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -122,6 +123,7 @@ module.exports = {
 
                 .catch((error) => {
                     console.log(error);
+
                 })
         }
 
@@ -137,12 +139,38 @@ module.exports = {
     },
 
     homeAdmin: (req, res, next) => {
+        
         if (req.method === 'GET') {
             res.render('homeAdmin');
         }
         else if (req.method === 'POST') {
-            res.render('homeAdmin');
-        }
+      console.log("==>in homeadminpost")
+
+            var currentTime =moment().format('x');
+            userActivityModel.find({})
+            .then((users)=>{
+                var userLoggedIn = [];
+                users.forEach(user => {
+                  
+                    // if(moment.duration(currentTime-user.timeStamp).asSeconds() > 200 ){
+                        
+                    //     userLoggedIn.push(user);
+                    // }
+
+                    var updatedUser = {
+                        userName : user.userName,
+                        timeStamp : moment.duration(currentTime-user.timeStamp).asSeconds()                        
+                    }
+                    userLoggedIn.push(updatedUser);
+
+
+                });
+                console.log("outside===>",userLoggedIn);
+                  ;res.json({userData:userLoggedIn})  
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
     },
 
     userProfile: (req, res, next) => {
@@ -153,13 +181,9 @@ module.exports = {
 
         }
         else if (req.method === 'POST') {
-            // console.log("token=====>",process.env.TOKEN);
-            jwt.verify(process.env.TOKEN, process.env.SECRETKEY, (err, decoded) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    userModel.findOne({ _id: decoded.userId }, (err, result) => {
+           
+            console.log("=====> from authentication" , req.body.userId);
+                    userModel.findOne({ _id: req.body.userId }, (err, result) => {
 
                         if (result === null) {
 
@@ -170,9 +194,32 @@ module.exports = {
                         }
                     });
                 }
-            });
+              
+    },
+
+    userProfileAdmin: (req, res, next) => {
+        if (req.method === 'GET') {
+
+            res.render('userProfileAdmin');
+
+
+        }
+        else if (req.method === 'POST') {
+            // console.log("token=====>",process.env.TOKEN);
+                  userModel.findOne({ _id: req.body.userId }, (err, result) => {
+
+                        if (result === null) {
+
+                            console.log("Authentication Failed DATA NOT FOUND");
+                        }
+                        else {
+                            res.json(result);
+                        }
+                    });
+                
         }
     },
+
 
     userUpdate: (req, res, next) => {
 
@@ -180,26 +227,41 @@ module.exports = {
             res.render('updateUser');
         }
         else if (req.method === 'POST') {
-            //res.render('homeAdmin');
-            jwt.verify(process.env.TOKEN, process.env.SECRETKEY, (err, decoded) => {
-                if (err) {
-                    console.log(err);
+            userModel.findOne({ _id: req.body.userId }, (err, result) => {
+
+                if (result === null) {
+
+                    console.log("Authentication Failed DATA NOT FOUND");
                 }
                 else {
-                    userModel.findOne({ _id: decoded.userId }, (err, result) => {
-
-                        if (result === null) {
-
-                            console.log("Authentication Failed DATA NOT FOUND");
-                        }
-                        else {
-                            res.json(result);
-                        }
-                    });
+                    res.json(result);
                 }
             });
         }
     },
+
+    userUpdateAdmin: (req, res, next) => {
+
+        if (req.method === 'GET') {
+            console.log("====>admin update");
+            res.render('updateUserAdmin');
+        }
+        else if (req.method === 'POST') {
+            //res.render('homeAdmin');
+            userModel.findOne({ _id: req.body.userId }, (err, result) => {
+
+                if (result === null) {
+
+                    console.log("Authentication Failed DATA NOT FOUND");
+                }
+                else {
+                    res.json(result);
+                }
+            });
+        }
+    },
+
+
     updateUserinDb : (req,res,next) => {
         if (req.method === 'GET') {
             res.render('updateUser');
@@ -241,15 +303,15 @@ module.exports = {
     searchUser: (req, res, next) => {
         if (req.method === 'GET') {
             res.render('searchUser');
-            console.log("=====>getserachuser")
+           
         }
         else if (req.method === 'POST') {
             userModel.findOne({email :req.body.email }, (err, result) => {
 
                 if (result === null) {
-
-                    console.log("Authentication Failed DATA NOT FOUND");
+                    //res.boom.unauthorized("User Not present");
                     res.json(result);
+                    
                 }
                 else {
                     res.json(result);

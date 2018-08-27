@@ -1,0 +1,95 @@
+doctype html
+html
+  head
+    title= "NodeJs App"
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    |<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    script
+     include ../public/javascripts/signUpRequest.js  
+    script
+     include ../public/javascripts/signInRequest.js  
+    script
+     include ../public/javascripts/fetchUser.js     
+
+  style 
+                |  .card {
+                |    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                |    max-width: 300px;
+                |    margin: auto;
+                |    text-align: center;
+                |    font-family: arial;
+                |  }
+
+                |  .card .title {
+                |    color: grey;
+                |    font-size: 18px;
+                |  }
+
+                |  .card button {
+                |   border: none;
+                |    outline: 0;
+                |    display: inline-block;
+                |   padding: 8px;
+                |    color: white;
+                |    background-color: #000;
+                |    text-align: center;
+                |    cursor: pointer;
+                |    width: 100%;
+                |    font-size: 18px;
+                |  }
+
+                | .card a {
+                |    text-decoration: none;
+                |    font-size: 22px;
+                |    color: black;
+                |  }
+
+                |  button:hover, a:hover {
+                |    opacity: 0.7;
+                |  }
+
+
+  body(onload="showUser()")
+        | <nav class="navbar navbar-inverse">
+        | <div class="container-fluid">
+        |   <div class="navbar-header">
+        |     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        |       <span class="icon-bar"></span>
+        |       <span class="icon-bar"></span>
+        |       <span class="icon-bar"></span>                        
+        |     </button>
+        |     <a class="navbar-brand" href="#">NodeJS Assignment</a>
+        |   </div>
+        |   <div class="collapse navbar-collapse" id="myNavbar">
+        |     <ul class="nav navbar-nav">
+        |       <li><a href="/homeAdmin"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
+        |       <li><a href="/updateuseradmin"><span class="glyphicon glyphicon-edit"></span> Update</a></li>
+        |       <li><a href="/alluser"><span class="glyphicon glyphicon-th-list"></span> All User</a></li>
+        |       <li><a href='/searchuser'><span class="glyphicon glyphicon-search"></span> Search User</a></li>
+        |     </ul>
+        |     <ul class="nav navbar-nav navbar-right">
+        |       <li class="active" onclick="showUserAdmin()"><a href="/userprofileadmin"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        |       <li><a href="/signin"><span class="glyphicon glyphicon-log-out    "></span> Logout</a></li>
+        |     </ul>
+        |   </div>
+        | </div>
+        | </nav>
+
+        |  <h2 style="text-align:center">User Profile</h2>
+
+        |  <div class="card">
+        |     <img src="http://localhost:3000/image/user.png" alt="John" style="width:100%">
+        |    <h1 id="fname"></h1>
+        |    <p id="email"></p>
+        |    <p><kbd>Cuelogic Technology</kbd></p>
+        |    <div style="margin: 24px 0;">
+        |      <a href="#"><i class="fa fa-dribbble"></i></a> 
+        |      <a href="#"><i class="fa fa-twitter"></i></a>  
+        |      <a href="#"><i class="fa fa-linkedin"></i></a>  
+        |      <a href="#"><i class="fa fa-facebook"></i></a> 
+        |  
+

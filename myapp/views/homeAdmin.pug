@@ -12,7 +12,9 @@ html
     script
      include ../public/javascripts/signInRequest.js  
     script
-     include ../public/javascripts/fetchUser.js     
+     include ../public/javascripts/fetchUserAdmin.js
+    script
+     include ../public/javascripts/userNotLogged.js      
   body(onload="userNotLoggedIn()")
         | <nav class="navbar navbar-inverse">
         | <div class="container-fluid">
@@ -27,12 +29,12 @@ html
         |   <div class="collapse navbar-collapse" id="myNavbar">
         |     <ul class="nav navbar-nav">
         |       <li class="active"><a href="/homeAdmin"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
-        |       <li><a href="/updateuser"><span class="glyphicon glyphicon-edit"></span> Update</a></li>
+        |       <li><a href="/updateuseradmin"><span class="glyphicon glyphicon-edit"></span> Update</a></li>
         |       <li><a href="/alluser"><span class="glyphicon glyphicon-th-list"></span> All User</a></li>
         |       <li><a href='/searchuser'><span class="glyphicon glyphicon-search"></span> Search User</a></li>
         |     </ul>
         |     <ul class="nav navbar-nav navbar-right">
-        |       <li onclick="showUser()"><a href="/userprofile"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        |       <li onclick="showUserAdmin()"><a href="/userprofileadmin"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
         |       <li><a href="/signin"><span class="glyphicon glyphicon-log-out    "></span> Logout</a></li>
         |     </ul>
         |   </div>
@@ -43,9 +45,9 @@ html
         |            <thead>
         |                <tr>
         |                    <th>Sr.No.</th>
-        |                    <th>First Name</th>
-        |                    <th>Last Name</th>
-        |                    <th>Email</th>
+        |                    <th>Username</th>
+        |                    <th>First Log in </th>
+        |                    
         |                </tr>
         |            </thead>
         |            <tbody>
