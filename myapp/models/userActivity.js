@@ -5,7 +5,9 @@ var Schema = mongoose.Schema;
 var userActivitySchema = new Schema({
     userId:  {type:mongoose.Schema.Types.ObjectId, ref:"User"},
     userName: String,
-    timeStamp: Number
+    timeStamp: Number,
+    UA: String,
+    IP: String
 });
 
 var userActivity = mongoose.model('userActivity', userActivitySchema);

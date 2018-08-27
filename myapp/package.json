@@ -12,6 +12,7 @@
     "dotenv": "^6.0.0",
     "express": "~4.16.0",
     "express-boom": "^2.0.0",
+    "express-useragent": "^1.0.12",
     "http-errors": "~1.6.2",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
@@ -19,6 +20,7 @@
     "mongoose": "^5.2.9",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "request-ip": "^2.1.1"
   }
 }
