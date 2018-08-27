@@ -152,16 +152,16 @@ module.exports = {
                 var userLoggedIn = [];
                 users.forEach(user => {
                   
-                    // if(moment.duration(currentTime-user.timeStamp).asSeconds() > 200 ){
+                    if(moment.duration(currentTime-user.timeStamp).asSeconds() > 432000 ){
                         
-                    //     userLoggedIn.push(user);
-                    // }
-
-                    var updatedUser = {
-                        userName : user.userName,
-                        timeStamp : moment.duration(currentTime-user.timeStamp).asSeconds()                        
+                        userLoggedIn.push(user);
                     }
-                    userLoggedIn.push(updatedUser);
+
+                    // var updatedUser = {
+                    //     userName : user.userName,
+                    //     timeStamp : moment.duration(currentTime-user.timeStamp).asSeconds()                        
+                    // }
+                    // userLoggedIn.push(updatedUser);
 
 
                 });
