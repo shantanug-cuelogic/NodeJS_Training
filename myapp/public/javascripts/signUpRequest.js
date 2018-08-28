@@ -1,6 +1,13 @@
 
 signUp = (event) => {
     
+    // var socket = io.connect('http://localhost:3000');
+    // socket.on('news', function (data) {
+    // alert(data.hello);
+    // socket.emit('my other event', { my: 'data' });
+    // });
+
+
     event.preventDefault();
     var email = $('#email').val();
     var firstName = $('#fname').val();

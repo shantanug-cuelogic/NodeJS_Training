@@ -34,7 +34,7 @@ updateUser = () => {
 },
         success: (result) => {
             if(result.success) {
-                alert("Update");
+                alert("Successfully Updated");
 
             }
             else {

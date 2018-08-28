@@ -1,5 +1,7 @@
 showUser = () => {
 
+   
+
     $.ajax({
         url: "http://localhost:3000/userprofile",
         method: "POST",

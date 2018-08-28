@@ -20,6 +20,25 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+const io = require('socket.io').listen(server);
+io.set('origins', 'http://localhost:3000');
+// io.on('connection', function (socket) {
+//   console.log("connected");
+//   socket.emit('news', { hello: 'Shantanu Gade' });
+//   socket.on('my other event', function (data) {
+//   console.log(data);
+//   });
+//   });
+
+exports.ioInstance = io;
+
+io.of('/homeadmin')
+.on('connection', function (socket) {
+  console.log("connected2");
+  socket.emit('news', { hello: 'Welcome User' });
+  
+  });
+
 
 /**
  * Listen on provided port, on all network interfaces.

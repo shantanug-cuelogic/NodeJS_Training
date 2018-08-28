@@ -18,7 +18,6 @@ $(document).ready(function () {
                 }
 
                 else {
-                    //document.getElementById('profilecard').style.display="block";
                     $('#profilecard').slideToggle();
                     document.getElementById('fname').innerHTML = result.firstName + " " + result.lastName;
 

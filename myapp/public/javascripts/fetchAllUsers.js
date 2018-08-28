@@ -8,35 +8,33 @@ allUsers = () => {
         },
         success: (result) => {
 
-            console.log("======>", result.users.length);
-
             if(result.success) {
                 
             for (append = 0; append < result.users.length; append++) {
 
-                var x = document.createElement("TR");
-                x.setAttribute("id", "listtr" + append);
-                document.getElementById("listtable").appendChild(x);
+                let newRow = document.createElement("TR");
+                newRow.setAttribute("id", "listtr" + append);
+                document.getElementById("listtable").appendChild(newRow);
 
-                var s = document.createElement("TD");
-                var t = document.createTextNode(append + 1);
-                s.appendChild(t);
-                document.getElementById("listtr" + append).appendChild(s);
+                let srnoColumn = document.createElement("TD");
+                let srText = document.createTextNode(append + 1);
+                srnoColumn.appendChild(srText);
+                document.getElementById("listtr" + append).appendChild(srnoColumn);
 
-                var c = document.createElement("TD");
-                var d = document.createTextNode(result.users[append].firstName);
-                c.appendChild(d);
-                document.getElementById("listtr" + append).appendChild(c);
+                let fnameColumn = document.createElement("TD");
+                let fnameColumnText = document.createTextNode(result.users[append].firstName);
+                fnameColumn.appendChild(fnameColumnText);
+                document.getElementById("listtr" + append).appendChild(fnameColumn);
 
-                var e = document.createElement("TD");
-                var f = document.createTextNode(result.users[append].lastName);
-                e.appendChild(f);
-                document.getElementById("listtr" + append).appendChild(e);
+                let lnameColumn = document.createElement("TD");
+                let lnameColumnText = document.createTextNode(result.users[append].lastName);
+                lnameColumn.appendChild(lnameColumnText);
+                document.getElementById("listtr" + append).appendChild(lnameColumn);
 
-                var g = document.createElement("TD");
-                var h = document.createTextNode(result.users[append].email);
-                g.appendChild(h);
-                document.getElementById("listtr" + append).appendChild(g);
+                let emailColumn = document.createElement("TD");
+                let emailColumnText = document.createTextNode(result.users[append].email);
+                emailColumn.appendChild(emailColumnText);
+                document.getElementById("listtr" + append).appendChild(emailColumn);
 
             }
         }

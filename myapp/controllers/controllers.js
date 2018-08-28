@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import useragent from 'express-useragent';
+import {ioInstance} from '../bin/www'
 
 
 const requestIp = require('request-ip');
@@ -13,6 +14,16 @@ require('dotenv').config();
 
 class Controllers {
     signIn(req, res, next) {
+
+        if(req.body.email.length<1){
+                
+            res.json({success: false});
+        }
+
+        if(req.body.email.length<1){
+            res.json({success: false});
+        }
+        
         userModel.findOne({ email: req.body.email }, (err, result) => {
 
             if (result === null) {
@@ -64,10 +75,6 @@ class Controllers {
                                     authorization: token,
                                 });
                             });
-                        
-                        
-                            
-                        
                         
                         }
                     }
@@ -145,6 +152,23 @@ class Controllers {
 
     getUserDetails(req, res, next) {
 
+        ioInstance.of('/homeadmin')
+        .on('connection', function (socket) {
+          console.log("connected2");
+          socket.emit('news', { hello: 'Shantanu Gadeadmin' });
+          
+          });
+        
+
+        // ioInstance.on('connection', function (socket) {
+        //     console.log("connected");
+        //     socket.emit('news', { hello: 'Shantanu Gade' });
+        //     socket.on('my other event', function (data) {
+        //     console.log(data);
+        //     });
+        //     });
+            
+        
         userModel.findOne({ _id: req.body.userId }, (err, result) => {
 
             if (result === null) {

@@ -8,9 +8,12 @@ import boom from 'express-boom';
 
 import routes from './routes/routes';
 
+
+
+
 require('dotenv').config();
 
-var app = express();
+const app = express();
 app.use(boom());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,13 +26,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-
-var io = require('socket.io').listen(app.listen(3001));
-
-io.sockets.on('connection', function(socket) {
-  socket.emit('welcome', 'hiiiii from server');
-
-  });
 
 
 

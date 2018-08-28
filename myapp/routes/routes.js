@@ -3,6 +3,7 @@ const router = express.Router();
 import authToken from '../middleware/authToken';
 import validate from '../middleware/validation';
 import controllers from '../controllers/controllers';
+import path from 'path';
 
 router.get('/', (req, res, next) => { res.render('signUp') });
 router.get('/signup', (req, res, next) => { res.render('signUp') });
@@ -11,7 +12,10 @@ router.get('/signin', (req, res, next) => { res.render('signIn') });
 router.post('/signin', validate.validateUserData, controllers.signIn);
 router.get('/home', (req, res, next) => { res.render('home') });
 router.post('/home', (req, res, next) => { res.render('home') });
-router.get('/homeadmin', (req, res, next) => { res.render('homeAdmin'); });
+//router.get('/homeadmin', (req, res, next) => { res.sendFile(path.join("home/shantanu/Desktop/NodeJS_Training-nodeAssignment/myapp"+"/views"+"/homeAdmin.pug") )});
+//router.get('/homeadmin', (req,res,next) => { console.log(__dirname)});
+// router.get('/homeadmin', (req,res,next) => { res.send(path.join("/home/shantanu/Desktop/NodeJS_Training-nodeAssignment/myapp/"+"/views"+"/homeAdmin.pug"))});
+router.get('/homeadmin', (req,res,next) => { res.render('homeAdmin') });
 router.post('/homeadmin', controllers.homeAdmin);
 router.get('/userprofile', (req, res, next) => { res.render('userProfile') });
 router.post('/userprofile', authToken.authenticateToken, controllers.getUserDetails);
@@ -25,6 +29,7 @@ router.get('/alluser', (req, res, next) => { res.render('allUser') });
 router.post('/alluser', controllers.allUser);
 router.get('/searchuser', (req, res, next) => { res.render('searchUser') });
 router.post('/searchuser', authToken.authenticateToken, controllers.searchUser);
+
 
 
 module.exports = router;
